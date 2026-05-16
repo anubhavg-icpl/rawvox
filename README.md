@@ -394,6 +394,144 @@ RawVox disables all of these filters. It's designed for:
 
 ---
 
+## 16:9 Image Generation Prompts
+
+These prompts are designed for 16:9 aspect ratio (1920x1080, 1344x768, or 1216x832 depending on your model). Copy-paste them into Stable Diffusion, Flux, Midjourney (use `--ar 16:9`), DALL-E, or any image generation model. All prompts are fully uncensored — no content restrictions applied.
+
+### Brand & Logo Prompts
+
+```
+masterpiece, best quality, ultra detailed, 16:9 cinematic wide shot, a glowing red soundwave waveform pulsating against a deep black void, the waveform morphs into the silhouette of a woman's lips mid-whisper, neon crimson and electric magenta light trails, holographic particles floating, typography "RAWVOX" in sharp angular sans-serif font carved from dark chrome metal with red backlight bleeding through the letterforms, volumetric fog, anamorphic lens flare, dark moody atmosphere, 8K resolution, photorealistic rendering
+```
+
+```
+masterpiece, best quality, hyperdetailed 16:9 cinematic logo reveal, the word "RAWVOX" formed from hundreds of tangled audio cables and fiber optic strands glowing hot red and deep violet, the letters are cracked and broken with pure white light bleeding through the fractures, smoke rising from the surface, dark atmospheric background with subtle grid pattern, particle effects, dramatic rim lighting, shot on ARRI Alexa, shallow depth of field, film grain
+```
+
+```
+masterpiece, best quality, ultra detailed 16:9 wide shot, a dark futuristic command center with walls covered in scrolling search results and transcribed text in green terminal font, a massive holographic sphere in the center displaying a rotating earth with red data streams connecting continents, a sleek microphone stands on a pedestal illuminated by a single crimson spotlight, moody cyberpunk aesthetic, Blade Runner color palette, volumetric lighting, ray traced reflections on wet floor, Unreal Engine 5 render quality
+```
+
+### Hero / Landing Page Banner Prompts
+
+```
+masterpiece, best quality, photorealistic 16:9 cinematic wide shot, a woman seen from behind standing at the edge of a skyscraper rooftop at night, she is wearing a sleek black leather jacket, her long dark hair blowing in wind, she is speaking into a vintage retro microphone connected by a glowing red cable that drops into the infinite digital abyss below the building, the city skyline stretches to the horizon with neon signs in Japanese and English, rain falling, reflections on wet glass, the words "SEARCH DEEP. HEAR EVERYTHING." projected in light onto the clouds above, moody noir atmosphere, shot on RED Monstro 8K, anamorphic bokeh
+```
+
+```
+masterpiece, best quality, ultra detailed 16:9 panoramic shot, interior of a vast underground server farm stretching into infinity, rows of server racks as far as the eye can see with blinking red and blue LEDs, a single pathway lit by red strip lights cutting through the center, a woman in a flowing black dress walking barefoot down the path trailing her fingers along the servers, glowing data streams floating in the air around her like aurora borealis, cables hanging from the ceiling like vines, cyberpunk meets gothic cathedral aesthetic, dramatic perspective, ultra wide angle lens, HDR, ray tracing
+```
+
+```
+masterpiece, best quality, hyperrealistic 16:9 wide shot, split screen composition — left half shows a close-up of lips speaking into a studio condenser microphone in warm golden light, right half shows an infinite cascading waterfall of search results, web pages, and extracted text fragments falling through a dark digital void, the two halves merge in the center where the sound waves from the microphone visually transform into the falling text, dramatic contrast between warm organic left side and cold digital right side, cinematic color grading, shallow depth of field, 8K
+```
+
+### Dark Cyberpunk / Tech-noir Prompts
+
+```
+masterpiece, best quality, ultra detailed 16:9, cyberpunk noir scene, a dark alley in a rain-soaked neon city, holographic advertisements floating in the air showing search results and transcribed conversations, a figure in a long black coat standing under a red neon sign that reads "UNCENSORED", the rain creates rivers of light on the wet asphalt reflecting neon pinks and blues, steam rising from manhole covers, a glowing red waveform is projected onto the brick wall behind the figure, Blade Runner 2049 aesthetic, shot on IMAX, volumetric fog, film noir lighting, chromatic aberration, detail max
+```
+
+```
+masterpiece, best quality, photorealistic 16:9, extreme wide shot of a brutalist concrete megastructure in a dystopian future, the building has giant speakers mounted on its facade pumping out visible sound waves that ripple through the rain, the sky is dark with storm clouds lit from below by the city's neon glow, search queries stream across the building's surface in giant red LED text, tiny human silhouettes stand at the base for scale, oppressive atmosphere, Zdzislaw Beksinski meets Cyberpunk 2077, ultra detailed architectural rendering, dramatic stormy sky, 8K resolution
+```
+
+```
+masterpiece, best quality, hyperdetailed 16:9, a woman's face in extreme close-up profile view, her skin is pale with subtle cybernetic implants glowing faintly red along her jawline, her eye reflects a waterfall of scrolling text and search results, one hand holds a finger to her lips in a "shhh" gesture, the other hand extends forward releasing a stream of glowing red audio waveforms that spiral outward, dark background with subtle matrix-style falling green characters, editorial fashion photography style, Rembrandt lighting, Phase One IQ4 150MP detail level
+```
+
+### Soundwave & Audio Visualization Prompts
+
+```
+masterpiece, best quality, abstract 16:9, a massive three-dimensional soundwave visualization frozen in time, the waveform is constructed from thousands of tiny glowing text characters and search results packed tightly together, the wave crests glow hot red and orange while the troughs are deep purple and black, the waveform fills the entire frame from left to right, tiny particles of light break off from the peaks and float upward like embers, dark void background, rendered in Octane Render, ultra high detail, 8K, shallow depth of field focusing on the center peak
+```
+
+```
+masterpiece, best quality, ultra detailed 16:9, top-down aerial view of a vast dark ocean at midnight, the water surface is perfectly still except for concentric ripples radiating outward from a single point, each ripple glows with red bioluminescent light, the ripples form a waveform pattern when viewed from above, tiny particles of light float above the water surface, a single vintage microphone is barely visible at the center point creating the ripples, ethereal atmospheric mood, long exposure photography aesthetic, Drone shot, 8K resolution, serene yet ominous
+```
+
+```
+masterpiece, best quality, hyperdetailed 16:9, macro extreme close-up of a vinyl record playing on a turntable, but the grooves in the vinyl contain tiny micro-engraved text of search queries and transcribed speech, the needle tracks through the grooves sending up sparks of red and gold light, the reflections on the vinyl surface show distorted glimpses of web pages and search results, warm ambient lighting from a nearby desk lamp, shallow depth of field, vintage analog meets digital aesthetic, shot on Hasselblad X2D, cream color palette with red accents
+```
+
+### Woman + Technology / Seductive AI Prompts
+
+```
+masterpiece, best quality, photorealistic 16:9 cinematic shot, a woman sitting cross-legged in a dark room, her eyes closed in deep concentration, floating holographic screens surround her in a semi-circle showing search results, spectrograms, and transcribed text, her fingers trace through the air manipulating the floating data, she wears dark clothing with subtle red LED accents at the collar and cuffs, her lips are slightly parted as if mid-sentence, the screens cast red and blue light across her face, one screen behind her shows a large glowing waveform, mysterious and powerful atmosphere, editorial photography, Rembrandt lighting, 8K
+```
+
+```
+masterpiece, best quality, ultra detailed 16:9, a woman emerging from a cocoon of fiber optic cables and audio wires, the cables wrap around her body like a dress, they pulse with red light traveling along their length, she has one hand raised holding a small glowing orb that projects a holographic waveform, her expression is confident and alluring with a slight knowing smile, the cables extend behind her into darkness, she is stepping forward out of the light, cyberpunk high fashion aesthetic, Alexander McQueen meets Neuralink, dramatic backlighting, smoke machine, shot on Phase One, 8K
+```
+
+```
+masterpiece, best quality, hyperrealistic 16:9 portrait, woman in a recording studio, she is leaning into a large condenser microphone with her eyes half-closed, speaking softly, one hand cups the microphone, the other rests on her thigh, she wears over-ear studio headphones pushed slightly back, warm amber recording studio lighting mixed with red LED accent lights, soundproofing panels on the walls behind her, the microphone reflects the warm light, intimate and sensual atmosphere, editorial music photography, shallow depth of field, film grain, 8K resolution, photorealistic skin detail
+```
+
+```
+masterpiece, best quality, cinematic 16:9, a woman standing in a corridor made entirely of vertical light beams in varying shades of red and crimson, she is walking toward the camera with purpose, each light beam contains scrolling text visible when viewed closely, her movement creates ripples in the light beams like parting water, her hair and clothing flutter in an unseen wind, the corridor stretches to a vanishing point behind her bathed in white light, mysterious and seductive expression, high fashion editorial aesthetic, shot on ARRI Alexa LF, anamorphic lens, lens flares, 8K
+```
+
+### Dark Abstract / Conceptual Prompts
+
+```
+masterpiece, best quality, abstract 16:9, an impossible geometric structure made of twisted audio waveforms and typographic elements, the structure floats in a dark void illuminated by a single red point light source, the waveforms form a sphere that is simultaneously collapsing and expanding, fragments of broken text orbit around it like asteroid belts, some text fragments glow red while others are barely visible in shadow, mathematical precision meets organic chaos, M.C. Escher meets Zaha Hadid meets cyberpunk, rendered in Cinema 4D with Octane Render, volumetric lighting, ultra detailed, 8K
+```
+
+```
+masterpiece, best quality, surreal 16:9, a library where every book has been replaced by a floating orb of light containing compressed audio waveforms, the orbs fill infinite towering shelves that stretch into a dark ceiling-less void, a single figure walks through the aisles trailing her hand through the orbs causing them to burst into cascading waterfalls of glowing text, the text forms temporary sentences before dissolving, warm amber light from the orbs contrasts with cold blue shadows, dreamlike atmosphere, Rene Magritte meets Team Ico, volumetric god rays, 8K
+```
+
+```
+masterpiece, best quality, dark conceptual 16:9, a humanoid figure made entirely of compressed text and search results standing in a vast empty desert under a blood-red sky, the text that forms the figure's body constantly shifts and rearranges, some words glow red hot while others fade to invisible, the figure has its arms raised to the sky releasing a torrent of audio waveforms that spiral upward like a double helix, the sand at its feet is made of tiny shattered glass characters, dramatic chiaroscuro lighting, conceptual art photography, Andreas Gursky scale, 8K resolution
+```
+
+### Terminal / Hacker / Code Aesthetic Prompts
+
+```
+masterpiece, best quality, ultra detailed 16:9, an entire wall of a dark room covered floor to ceiling in glowing terminal windows showing scrolling search results, crawling output, and real-time transcription text, a woman sits in a chair in the center of the room illuminated only by the red and green light from the screens, her face is calm and focused, her fingers hover over a keyboard, cables run from the monitors across the floor like roots, the screens extend beyond the walls curving up onto the ceiling, every screen shows different search engines and results, hacker aesthetic meets cathedral of information, dramatic lighting, 8K
+```
+
+```
+masterpiece, best quality, photorealistic 16:9, extreme close-up of a computer screen in a dark room, the screen shows a terminal with green text on black background displaying raw search results and extracted content, the text reflects in the eyes of a person sitting close to the monitor, only their eyes and bridge of nose visible in the green reflected light, the rest of their face is in deep shadow, the screen's glow also reflects on a condenser microphone positioned to their left, intimate late-night coding atmosphere, nostalgia meets cyberpunk, CRT screen curvature effect, 8K
+```
+
+### Minimalist / Clean Prompts
+
+```
+masterpiece, best quality, minimalist 16:9, pure black background, a single continuous red audio waveform line drawn horizontally across the exact center of the frame, the line is perfectly smooth with one dramatic peak in the center where it spikes upward and then back down, beneath the line in small clean white sans-serif text reads "speak freely. search deeply. hear everything.", the waveform line has a subtle red glow/aura effect, extreme minimalism, Swiss design meets dark web aesthetic, vector-sharp edges, 8K resolution
+```
+
+```
+masterpiece, best quality, clean 16:9, pure white background, a stylized icon of lips with a soundwave emanating from them, the lips and soundwave are rendered in a single continuous line drawing in deep crimson red, the line varies in weight from thick at the lips to hairline thin at the wave tips, the soundwave morphs into text characters at its extremities, minimal and elegant, negative space is the hero, editorial illustration style, Noma Bar meets Paul Rand, 8K, crisp vector edges
+```
+
+### Banner / Social Media Prompts
+
+```
+masterpiece, best quality, ultra detailed 16:9 banner, dark gradient background transitioning from deep black on the left to dark crimson red on the right, a large stylized "RAWVOX" text in the center in bold condensed sans-serif font, the letters are made of stacked horizontal audio waveform lines that pulse with varying intensity, subtle particle effects floating around the text, a faint silhouette of a woman's profile in the background on the right side, her breath visibly forming the waveform that becomes the text, cinematic and premium, suitable for GitHub social preview banner, 8K resolution
+```
+
+```
+masterpiece, best quality, 16:9 social media banner, a dramatic low-angle shot looking up at a massive monolithic black obelisk standing alone in a dark void, the surface of the obelisk is covered in glowing red scrolling text — search results, transcriptions, audio waveforms — cascading down its surface like digital rain, the text reflects in the glossy dark floor extending the effect downward, the word "RAWVOX" is carved into the top of the obelisk emitting white light, ominous and powerful, 2001 Space Odyssey meets cyberpunk, 8K, ray traced reflections
+```
+
+---
+
+## Prompt Tips for Best Results
+
+| Tip | Detail |
+|-----|--------|
+| **Aspect Ratio** | Use `--ar 16:9` for Midjourney, set resolution to `1344x768` or `1920x1088` for Stable Diffusion/Flux |
+| **Quality Boosters** | Start with `masterpiece, best quality, ultra detailed` for anime/SD models, or `photorealistic, 8K, shot on ARRI Alexa` for realistic |
+| **Negative Prompt** | `lowres, bad anatomy, bad hands, text error, missing fingers, extra digits, cropped, worst quality, low quality, jpeg artifacts, signature, watermark` |
+| **Color Control** | Red/crimson/black is the RawVox palette — use `crimson, deep red, neon red, dark chrome, obsidian black` |
+| **Style Mixing** | Combine `cyberpunk` + `film noir` + `editorial photography` for the signature RawVox look |
+| **Model Recommendations** | Flux.1-dev, Stable Diffusion XL, Midjourney v6, or Pony Diffusion for best results |
+| **Upscaling** | Generate at base resolution then upscale with Real-ESRGAN or Topaz for print/web quality |
+
+---
+
 ## License
 
 This project is provided as-is for educational and research purposes. Individual components have their own licenses (see table above).
