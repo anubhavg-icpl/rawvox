@@ -1,54 +1,73 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/UNCENSORED-RAWVOX-red?style=for-the-badge&labelColor=black" alt="rawvox badge">
-  <br>
-  <strong>Uncensored AI ASR + Deep Internet Search + Seductive Voice Output</strong>
-  <br>
-  <em>Speak. Search. Hear. No filters. No censorship. No limits.</em>
-</p>
+<div align="center">
+
+<img src="assets/crimson_soundwave_morphs_into_lips.avif" alt="RawVox — Uncensored AI ASR + Deep Search" width="100%">
+
+[![Uncensored](https://img.shields.io/badge/UNCENSORED-RAWVOX-red?style=for-the-badge&labelColor=black)]()
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-Apache%202.0-green?style=flat-square)]()
+[![HuggingFace](https://img.shields.io/badge/TTS-Kokoro%20%231-yellow?style=flat-square)]()
+
+# RawVox
+
+### Uncensored AI ASR · Deep Internet Search · Seductive Voice Output
+
+**Speak. Search deep. Hear everything. No filters. No censorship. No limits.**
+
+[Get Started](#quick-start) · [Architecture](#architecture) · [Gallery](#gallery) · [API](#api-reference)
+
+</div>
 
 ---
 
-## What is RawVox?
+<img src="assets/woman_on_skyscraper_rooftop_night.avif" alt="Hero" width="100%">
 
-RawVox is an end-to-end, fully uncensored AI pipeline that lets you:
+---
 
-1. **Speak** into your microphone — real-time transcription via faster-whisper (large-v3)
-2. **Search** the deep internet — multi-engine aggregation (DuckDuckGo, Brave, Mojeek, SearXNG) with deep page crawling, no safesearch, no content filtering
-3. **Extract & Synthesize** — semantic ranking via sentence-transformers pulls the most relevant facts from crawled pages
-4. **Hear the answer** — spoken back to you in a seductive voice via Kokoro-82M (HuggingFace's #1 TTS model with 9.7M downloads)
+## What It Does
 
-Nothing is filtered at any stage. No content moderation. No censorship. Raw.
+RawVox is a fully uncensored, end-to-end AI voice pipeline:
+
+| Stage | What Happens | Tech |
+|-------|-------------|------|
+| **1. Speak** | Talk into your mic — real-time transcription | faster-whisper large-v3 |
+| **2. Search** | Deep internet search across 4 engines, safesearch OFF | DuckDuckGo, Brave, Mojeek, SearXNG |
+| **3. Extract** | Semantic ranking pulls the most relevant facts | sentence-transformers |
+| **4. Hear** | Answer spoken back in a seductive voice | Kokoro-82M (HuggingFace #1 TTS) |
+
+Every stage is unfiltered. No content moderation. No censorship. Raw.
 
 ---
 
 ## Architecture
+
+<img src="assets/command_center_with_holographic.avif" alt="Architecture — Command Center" width="100%">
 
 ```
   🎤 Microphone
       │
       ▼
   ┌──────────────────────┐
-  │   faster-whisper      │  Real-time ASR transcription
-  │   large-v3 (int8)     │  No VAD filter, no content filtering
+  │   faster-whisper      │  Real-time ASR, no VAD filter
+  │   large-v3 (int8)     │  No content filtering
   └──────────┬───────────┘
-             │ text
+             │ transcribed text
              ▼
   ┌──────────────────────┐
-  │  Uncensored Search    │  Multi-engine: DuckDuckGo, Brave,
-  │  Deep Web Crawler     │  Mojeek, SearXNG (safesearch=OFF)
-  │  (async httpx)        │  Deep crawls top results, extracts
-  └──────────┬───────────┘  full page content (up to 50K chars)
+  │  Uncensored Search    │  4 engines in parallel
+  │  Deep Web Crawler     │  safesearch=OFF on all
+  │  (async httpx)        │  Deep-crawls up to 50K chars/page
+  └──────────┬───────────┘
              │ search results
              ▼
   ┌──────────────────────┐
-  │  Content Extractor    │  sentence-transformers semantic ranking
-  │  & Synthesizer        │  Chunks text, ranks by relevance,
-  │  (all-MiniLM-L6-v2)   │  synthesizes top facts into answer
+  │  Content Extractor    │  Semantic chunk ranking
+  │  & Synthesizer        │  Cosine similarity scoring
+  │  (all-MiniLM-L6-v2)   │  Top 15 facts synthesized
   └──────────┬───────────┘
              │ synthesized answer
              ▼
   ┌──────────────────────┐
-  │  Kokoro-82M TTS       │  #1 HuggingFace TTS model
+  │  Kokoro-82M TTS       │  #1 HF TTS model (9.7M downloads)
   │  af_bella (A-grade)   │  Warm, sultry, seductive voice
   │  speed=0.8 (slower)   │  Fallback: edge-tts, macOS say, XTTS-v2
   └──────────┬───────────┘
@@ -59,84 +78,20 @@ Nothing is filtered at any stage. No content moderation. No censorship. Raw.
 
 ---
 
-## Features
-
-### Real-Time ASR
-- **faster-whisper** with large-v3 model — best accuracy available
-- Auto-detects language or force a specific one
-- No voice activity detection filter — captures everything
-- Word-level timestamps for precision
-- Supports live mic input or audio file transcription
-
-### Uncensored Deep Web Search
-- **4 search engines** aggregated simultaneously: DuckDuckGo, Brave, Mojeek, SearXNG
-- **safesearch=OFF** on every engine — no content filtering
-- **Deep crawling** — fetches full HTML content from top results (up to 50,000 chars per page)
-- Intelligent text extraction — strips scripts, nav, footers; targets article/main content
-- URL deduplication across engines
-- Async httpx for fast parallel requests
-- Custom User-Agent and header rotation to avoid blocks
-
-### Content Extraction & Synthesis
-- **sentence-transformers** (`all-MiniLM-L6-v2`) for semantic chunk ranking
-- Text chunking into 512-char segments
-- Cosine similarity scoring against your query
-- Top 15 most relevant facts extracted and synthesized
-- Confidence scoring on every answer
-- Source attribution with engine, title, and URL
-
-### Seductive Voice Output (TTS)
-- **Kokoro-82M** — HuggingFace's #1 TTS model (9.7M downloads, Apache 2.0 license)
-- **`af_bella`** (A-grade) — warm, sultry, highest quality female voice
-- **`af_heart`** (A-grade) — intimate, emotional, heartfelt whispers
-- **`af_nicole`** (B-grade) — close intimate mic, ASMR-like, headphones recommended
-- **`af_aoede`** — breathy, soft, gentle whispering
-- **`af_sarah`** — smooth, confident, natural warmth
-- **`bf_emma`** — British, sophisticated, elegant seduction
-- Speed control — 0.8x default (slower = more sensual)
-- Auto-detects best available backend: Kokoro → edge-tts → macOS say → Coqui XTTS-v2
-- Voice cloning support via Coqui XTTS-v2 (pass any `speaker_wav` file)
-
-### CLI Interface
-- `rawvox live` — real-time mic → search → voice response (continuous loop)
-- `rawvox query "your text"` — direct text query with rich formatted output
-- `rawvox file audio.wav` — transcribe audio file → search → respond
-- `rawvox search "topic"` — deep search only (no ASR/TTS)
-- Beautiful terminal output via Rich (tables, panels, colors)
-
-### FastAPI Server
-- `POST /search` — text query → synthesized answer with sources
-- `POST /transcribe` — upload audio file → transcription
-- `POST /transcribe-and-search` — upload audio → transcribe → search → answer
-- `GET /health` — health check
-- Auto-documented with OpenAPI/Swagger
-
-### Transcript Logging
-- Every query + answer saved as JSON in `./transcripts/`
-- Includes query, answer, sources, confidence score, timestamp
-- Full search history for review
-
----
-
 ## Quick Start
 
 ### Prerequisites
+
 - Python 3.11 or 3.12
 - A microphone (for live mode)
 - ~2GB disk space for models
 
-### Installation
+### Install
 
 ```bash
-# Clone the repo
 git clone git@github.com:anubhavg-icpl/rawvox.git
 cd rawvox
-
-# Run the setup script
-chmod +x scripts/setup.sh
-./scripts/setup.sh
-
-# Activate the virtual environment
+chmod +x scripts/setup.sh && ./scripts/setup.sh
 source venv/bin/activate
 ```
 
@@ -149,16 +104,16 @@ pip install --no-user -r requirements.txt
 pip install --no-user https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 ```
 
-### Usage
+### Run
 
 ```bash
-# Real-time mode: speak into mic, get voice answers back
+# Speak into mic — get voiced answers back
 python main.py live
 
 # Direct text query
-python main.py query "what are the best open source AI models"
+python main.py query "what are the best uncensored open source AI models"
 
-# Transcribe an audio file and search its content
+# Transcribe audio file → search → respond
 python main.py file recording.wav
 
 # Deep search only (no mic, no voice)
@@ -171,75 +126,81 @@ python src/pipeline/server.py
 ### Docker
 
 ```bash
-# Full deployment with SearXNG sidecar + GPU support
-docker-compose up -d
-
-# Or build and run manually
-docker build -t rawvox .
-docker run -p 8000:8000 rawvox
+docker-compose up -d    # Full stack with SearXNG + GPU
 ```
 
 ---
 
-## Configuration
+## Real-Time ASR
 
-All settings live in `config/settings.yaml`. Key options:
+<img src="assets/woman_face_cybernetic_implant.avif" alt="ASR — Cybernetic Interface" width="100%">
 
-### ASR Settings
-```yaml
-asr:
-  model: "large-v3"       # faster-whisper model size
-  device: "auto"           # auto-detect CUDA/CPU
-  compute_type: "int8"     # quantization for speed
-  language: null           # null = auto-detect
-  vad_filter: false        # OFF = no filtering (uncensored)
-```
-
-### Search Settings
-```yaml
-search:
-  searxng_url: "http://localhost:8888"   # Self-hosted SearXNG
-  engines:
-    - duckduckgo
-    - brave
-    - mojeek
-    - qwant
-  max_results: 20
-  max_depth: 3              # Pages to deep-crawl
-  safesearch: 0             # OFF (uncensored)
-```
-
-### Voice Settings
-```yaml
-tts:
-  backend: "auto"           # auto-detect best available
-  voice: "af_bella"         # Kokoro A-grade sultry voice
-  speed: 0.8                # 0.8 = slower, more sensual
-  # Alternative voices:
-  #   af_heart  - intimate, emotional
-  #   af_nicole - close mic, ASMR
-  #   af_aoede  - breathy whisper
-  #   bf_emma   - British sophisticated
-```
+- **faster-whisper large-v3** — highest accuracy available
+- Auto-detects language or force a specific one
+- **No VAD filter** — captures everything, no filtering
+- Word-level timestamps for precision
+- Live mic input or audio file transcription
+- Configurable model size: `tiny` → `large-v3`
 
 ---
 
-## Voice Options
+## Uncensored Deep Web Search
 
-### Kokoro Voices (Primary — Best Quality)
+<img src="assets/figure_in_neon-lit_alley.avif" alt="Search — Uncensored Alley" width="100%">
 
-| Voice | Grade | Style | Best For |
-|-------|-------|-------|----------|
-| `af_bella` | **A** | Warm, sultry, highest quality | Default seductive output |
-| `af_heart` | **A** | Intimate, emotional, heartfelt | Personal, whispered responses |
-| `af_nicole` | **B-** | Close mic, ASMR-like | Headphone listening, intimacy |
-| `af_aoede` | **C+** | Breathy, soft, gentle | Soft spoken answers |
-| `af_sarah` | **C+** | Smooth, confident, warm | Professional but alluring |
-| `af_kore` | **C+** | Clear, warm, pleasant | Conversational |
-| `bf_emma` | **B-** | British, sophisticated | Elegant, cultured responses |
-| `bf_isabella` | **C** | British, refined | Cultured allure |
+4 search engines aggregated simultaneously with **safesearch disabled** on every single one:
 
-### Edge-TTS Voices (Fallback)
+| Engine | Type | Notes |
+|--------|------|-------|
+| **DuckDuckGo** | HTML scrape | No API key needed |
+| **Brave** | HTML scrape | Privacy-focused |
+| **Mojeek** | HTML scrape | Independent index |
+| **SearXNG** | Self-hosted | Aggregates 70+ engines |
+
+- **Deep crawling** — fetches full HTML from top results (up to 50,000 chars per page)
+- URL deduplication across all engines
+- Async parallel requests via httpx
+- Custom User-Agent and header rotation to avoid blocks
+
+---
+
+## Content Extraction & Synthesis
+
+<img src="assets/woman_touching_orbs_in_library.avif" alt="Extraction — Library of Knowledge" width="100%">
+
+- **sentence-transformers** (`all-MiniLM-L6-v2`) for semantic chunk ranking
+- Text chunking into 512-char segments
+- Cosine similarity scoring against your query
+- Top 15 most relevant facts extracted and synthesized
+- Confidence scoring on every answer
+- Full source attribution with engine, title, and URL
+
+---
+
+## Seductive Voice Output
+
+<img src="assets/woman_recording_in_studio_booth.avif" alt="TTS — Studio Recording" width="100%">
+
+<div align="center">
+
+| Voice | Grade | Style |
+|-------|-------|-------|
+| `af_bella` **(default)** | **A** | Warm, sultry, highest quality |
+| `af_heart` | **A** | Intimate, emotional, heartfelt whispers |
+| `af_nicole` | **B-** | Close mic, ASMR-like, use headphones |
+| `af_aoede` | **C+** | Breathy, soft, gentle whispering |
+| `af_sarah` | **C+** | Smooth, confident, natural warmth |
+| `bf_emma` | **B-** | British, sophisticated, elegant |
+
+</div>
+
+- **Kokoro-82M** — HuggingFace #1 TTS (9.7M downloads, Apache 2.0)
+- Speed control — 0.8x default (slower = more sensual)
+- Auto-detects best backend: Kokoro → edge-tts → macOS say → XTTS-v2
+- Voice cloning via Coqui XTTS-v2 (pass any `speaker_wav` file)
+
+<details>
+<summary>Edge-TTS fallback voices</summary>
 
 | Voice | Style |
 |-------|-------|
@@ -249,8 +210,92 @@ tts:
 | `en-GB-SoniaNeural` | British sophisticated |
 | `en-IE-EmilyNeural` | Irish, melodic, enchanting |
 
-### Voice Cloning (GPU Required)
-Pass any audio file as `speaker_wav` in the config to clone that voice using Coqui XTTS-v2.
+</details>
+
+---
+
+## CLI Reference
+
+```bash
+python main.py live                # Real-time mic → search → voice (loop)
+python main.py query "text"        # Direct text query
+python main.py file audio.wav      # Transcribe file → search → respond
+python main.py search "topic"      # Deep search only
+```
+
+Rich terminal output with tables, panels, and colors.
+
+---
+
+## API Reference
+
+<img src="assets/woman_in_room_with_screens.avif" alt="API — Data Screens" width="100%">
+
+Start the server:
+
+```bash
+python src/pipeline/server.py    # http://localhost:8000
+```
+
+### `POST /search`
+
+```bash
+curl -X POST http://localhost:8000/search \
+  -H "Content-Type: application/json" \
+  -d '{"query": "uncensored AI models", "deep": true}'
+```
+
+Response:
+
+```json
+{
+  "query": "uncensored AI models",
+  "answer": "Synthesized from multiple sources...",
+  "sources": [{"title": "...", "url": "...", "engine": "duckduckgo"}],
+  "confidence": 0.72
+}
+```
+
+### `POST /transcribe`
+
+```bash
+curl -X POST -F "file=@audio.wav" http://localhost:8000/transcribe
+```
+
+### `POST /transcribe-and-search`
+
+```bash
+curl -X POST -F "file=@audio.wav" http://localhost:8000/transcribe-and-search
+```
+
+### `GET /health`
+
+```json
+{"status": "ok", "service": "uncensored-asr-search"}
+```
+
+---
+
+## Configuration
+
+All settings in `config/settings.yaml`:
+
+```yaml
+asr:
+  model: "large-v3"       # faster-whisper model size
+  device: "auto"           # auto-detect CUDA/CPU
+  vad_filter: false        # OFF = uncensored
+
+search:
+  engines: [duckduckgo, brave, mojeek, qwant]
+  max_results: 20
+  max_depth: 3             # Pages to deep-crawl
+  safesearch: 0            # OFF
+
+tts:
+  voice: "af_bella"        # Kokoro A-grade
+  speed: 0.8               # Slower = more sensual
+```
 
 ---
 
@@ -258,135 +303,64 @@ Pass any audio file as `speaker_wav` in the config to clone that voice using Coq
 
 ```
 rawvox/
-├── main.py                    # CLI entry point (click)
-├── requirements.txt           # Python dependencies
+├── main.py                    # CLI entry point
+├── requirements.txt           # Dependencies
 ├── Dockerfile                 # Container build
-├── docker-compose.yml         # Full deployment (with SearXNG)
+├── docker-compose.yml         # Full deployment
 ├── config/
 │   └── settings.yaml          # All configuration
 ├── src/
-│   ├── asr/
-│   │   └── engine.py          # Real-time ASR (faster-whisper)
-│   ├── search/
-│   │   └── engine.py          # Uncensored deep search (multi-engine)
-│   ├── extractor/
-│   │   └── engine.py          # Content extraction & synthesis
-│   ├── tts/
-│   │   └── engine.py          # Seductive TTS (Kokoro/edge-tts/XTTS-v2)
+│   ├── asr/engine.py          # Real-time ASR
+│   ├── search/engine.py       # Uncensored deep search
+│   ├── extractor/engine.py    # Content extraction
+│   ├── tts/engine.py          # Seductive TTS
 │   └── pipeline/
-│       ├── orchestrator.py    # End-to-end pipeline coordinator
-│       └── server.py          # FastAPI HTTP server
+│       ├── orchestrator.py    # E2E pipeline
+│       └── server.py          # FastAPI server
+├── assets/                    # AVIF images (gallery)
 ├── tests/
-│   └── test_search.py         # Search module test
+│   └── test_search.py
 ├── scripts/
-│   └── setup.sh               # Quick start setup script
-└── transcripts/               # Auto-saved query transcripts (JSON)
+│   └── setup.sh
+└── transcripts/               # Auto-saved JSON transcripts
 ```
 
 ---
 
-## API Reference
+## End-to-End Flow
 
-### `POST /search`
-Search with a text query. Returns synthesized answer with sources.
-
-```json
-{
-  "query": "your search text",
-  "deep": true,
-  "speak": false
-}
-```
-
-Response:
-```json
-{
-  "query": "your search text",
-  "answer": "Synthesized answer from multiple sources...",
-  "sources": [
-    {"title": "...", "url": "...", "engine": "duckduckgo"}
-  ],
-  "confidence": 0.72
-}
-```
-
-### `POST /transcribe`
-Upload an audio file for transcription.
-
-```bash
-curl -X POST -F "file=@audio.wav" http://localhost:8000/transcribe
-```
-
-### `POST /transcribe-and-search`
-Upload audio → transcribe → deep search → return synthesized answer.
-
-```bash
-curl -X POST -F "file=@audio.wav" http://localhost:8000/transcribe-and-search
-```
-
-### `GET /health`
-```json
-{"status": "ok", "service": "uncensored-asr-search"}
-```
-
----
-
-## Open Source Dependencies
-
-| Library | Purpose | License |
-|---------|---------|---------|
-| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | Real-time ASR transcription | MIT |
-| [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) | #1 TTS model, seductive voices | Apache 2.0 |
-| [sentence-transformers](https://huggingface.co/sentence-transformers) | Semantic content ranking | Apache 2.0 |
-| [edge-tts](https://github.com/rany2/edge-tts) | Microsoft neural TTS fallback | GPL-3.0 |
-| [httpx](https://github.com/encode/httpx) | Async HTTP client | BSD-3 |
-| [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | HTML parsing | MIT |
-| [FastAPI](https://github.com/tiangolo/fastapi) | HTTP API server | MIT |
-| [SearXNG](https://github.com/searxng/searxng) | Self-hosted uncensored metasearch | AGPL-3.0 |
-
----
-
-## How It Works (End-to-End Flow)
+<img src="assets/rawvox_logo_formed_cables.avif" alt="E2E Flow" width="100%">
 
 ### Live Mode (`python main.py live`)
 
 1. **Mic captures audio** at 16kHz via sounddevice, buffered in 5-second chunks
-2. **faster-whisper large-v3** transcribes each chunk in real-time with word timestamps
-3. **Silence detection** — after 2 seconds of silence, the accumulated text is finalized as a query
-4. **Query is sent to the search engine** — all configured engines fire in parallel:
-   - DuckDuckGo HTML search (no API key needed, safesearch off)
-   - Brave search (safesearch off)
-   - Mojeek (privacy-focused, no censorship)
-   - SearXNG (if running locally, aggregates 70+ engines)
-5. **Results are deduplicated** by URL, sorted by rank
-6. **Top 3 results are deep-crawled** — full HTML fetched, stripped to text content (up to 50K chars each)
-7. **Content is chunked** into 512-char segments
-8. **sentence-transformers** encodes the query and all chunks, computes cosine similarity
-9. **Top 15 most relevant chunks** are synthesized into a coherent answer
-10. **Kokoro-82M** with `af_bella` voice generates audio at 0.8x speed (slow, sultry)
+2. **faster-whisper large-v3** transcribes in real-time with word timestamps
+3. **Silence detection** — 2 seconds of silence finalizes the query
+4. **All engines fire in parallel** — DuckDuckGo, Brave, Mojeek, SearXNG
+5. **Results deduplicated** by URL, sorted by rank
+6. **Top 3 results deep-crawled** — full HTML extracted (up to 50K chars each)
+7. **Content chunked** into 512-char segments
+8. **sentence-transformers** encodes and ranks by cosine similarity
+9. **Top 15 chunks** synthesized into a coherent answer
+10. **Kokoro-82M af_bella** generates audio at 0.8x speed (slow, sultry)
 11. **Audio plays** through your speakers via sounddevice
-12. **Transcript saved** as JSON with query, answer, sources, confidence, timestamp
-13. **Loop continues** — mic stays active, listening for your next query
-
-### Query Mode (`python main.py query "text"`)
-
-Same pipeline as above, but skips ASR — takes text input directly, outputs rich formatted table + synthesized answer.
-
-### Search Mode (`python main.py search "topic"`)
-
-Search only — no ASR, no TTS. Displays results in a Rich table with engine, title, URL, snippet, and content availability.
+12. **Transcript saved** as JSON with query, answer, sources, confidence
+13. **Loop continues** — mic stays active for your next query
 
 ---
 
 ## Why Uncensored?
 
-Most AI systems apply content filtering at multiple stages:
+<img src="assets/concrete_monolith_tower_loudspea.avif" alt="Why Uncensored — Speaker Tower" width="100%">
+
+Most AI systems filter at every stage:
 - ASR models that refuse to transcribe "sensitive" audio
 - Search engines that enforce safesearch by default
-- Content extractors that skip "adult" or "controversial" pages
+- Content extractors that skip "controversial" pages
 - TTS systems that refuse to speak certain text
 
-RawVox disables all of these filters. It's designed for:
+RawVox disables **all** of these filters. Built for:
+
 - **Researchers** who need unfiltered access to information
 - **Security professionals** who need to analyze any content
 - **Journalists** who need to search without algorithmic bias
@@ -394,190 +368,80 @@ RawVox disables all of these filters. It's designed for:
 
 ---
 
+## Gallery
 
-## Gallery — Generated Images
+All 40 images generated from uncensored prompts. AVIF format (75% smaller than JPEG). 16:9 at 1376×768.
 
-All images generated from uncensored prompts, converted to AVIF (75% smaller than JPEG). 16:9 at 1376x768.
+<img src="assets/rawvox_text_with_waveform_lines.avif" alt="RAWVOX banner" width="100%">
 
-### Brand & Logo
+<table>
+<tr>
+<td width="50%"><img src="assets/crimson_audio_waveform_on_black.avif" alt="Crimson waveform" width="100%"></td>
+<td width="50%"><img src="assets/lips_soundwave_line_drawing.avif" alt="Lips line drawing" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/soundwave_visualization_text_cha.avif" alt="Text soundwave" width="100%"></td>
+<td width="50%"><img src="assets/ocean_ripples_form_audio_waveform.avif" alt="Ocean ripples" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/vinyl_record_spinning_on_turntable.avif" alt="Vinyl record" width="100%"></td>
+<td width="50%"><img src="assets/geometric_structure_audio_wavefo.avif" alt="Geometric structure" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/ink_dropped_on_paper_waveform.avif" alt="Ink waveform" width="100%"></td>
+<td width="50%"><img src="assets/heartbeat_monitor_screen_showing.avif" alt="Heartbeat monitor" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/black_hole_absorbing_information.avif" alt="Black hole" width="100%"></td>
+<td width="50%"><img src="assets/masterpiece_best_quality_dark_conceptual.avif" alt="Desert text figure" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/web_pages_network_constellation.avif" alt="Web constellation" width="100%"></td>
+<td width="50%"><img src="assets/human_eye_with_audio_waveform.avif" alt="Eye waveform" width="100%"></td>
+</tr>
+</table>
 
-<p align="center">
-  <img src="assets/crimson_soundwave_morphs_into_lips.avif" alt="Crimson soundwave morphs into lips" width="100%">
-</p>
+<img src="assets/woman_walking_in_server_farm.avif" alt="Server farm" width="100%">
 
-<p align="center">
-  <img src="assets/rawvox_logo_formed_cables.avif" alt="RAWVOX logo formed from cables" width="100%">
-</p>
+<table>
+<tr>
+<td width="50%"><img src="assets/woman_manipulating_holographic_data.avif" alt="Holographic data" width="100%"></td>
+<td width="50%"><img src="assets/woman_emerging_from_cables.avif" alt="Emerging cables" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/woman_walking_in_light_corridor.avif" alt="Light corridor" width="100%"></td>
+<td width="50%"><img src="assets/woman_with_glowing_red_waveform.avif" alt="Waveform halo" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/woman_on_throne_of_monitors.avif" alt="Data throne" width="100%"></td>
+<td width="50%"><img src="assets/woman_holding_glowing_microphone.avif" alt="Microphone weapon" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/woman_underwater_in_data_center.avif" alt="Underwater data center" width="100%"></td>
+<td width="50%"><img src="assets/woman_walking_in_waveform_garden.avif" alt="Waveform garden" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/woman_speaking_into_microphone_s.avif" alt="Shockwave voice" width="100%"></td>
+<td width="50%"><img src="assets/woman_in_data_storm.avif" alt="Data storm" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/woman_back_with_tattoo.avif" alt="Search tattoo" width="100%"></td>
+<td width="50%"><img src="assets/woman_face_reflected_shattered.avif" alt="Shattered mirror" width="100%"></td>
+</tr>
+</table>
 
-<p align="center">
-  <img src="assets/command_center_with_holographic.avif" alt="Command center with holographic globe" width="100%">
-</p>
+<img src="assets/lips_speaking_into_microphone_wa.avif" alt="Lips to text waterfall" width="100%">
 
-<p align="center">
-  <img src="assets/rawvox_text_with_waveform_lines.avif" alt="RAWVOX text with waveform lines" width="100%">
-</p>
-
-### Hero / Cinematic
-
-<p align="center">
-  <img src="assets/woman_on_skyscraper_rooftop_night.avif" alt="Woman on skyscraper rooftop at night" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_walking_in_server_farm.avif" alt="Woman walking in server farm" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/lips_speaking_into_microphone_wa.avif" alt="Lips speaking into microphone waterfall" width="100%">
-</p>
-
-### Dark Cyberpunk / Tech-noir
-
-<p align="center">
-  <img src="assets/figure_in_neon-lit_alley.avif" alt="Figure in neon-lit alley UNCENSORED" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/concrete_monolith_tower_loudspea.avif" alt="Concrete monolith tower with loudspeakers" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_face_cybernetic_implant.avif" alt="Woman face cybernetic implant" width="100%">
-</p>
-
-### Soundwave & Audio Visualization
-
-<p align="center">
-  <img src="assets/soundwave_visualization_text_cha.avif" alt="Soundwave visualization from text characters" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/ocean_ripples_form_audio_waveform.avif" alt="Ocean ripples form audio waveform" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/vinyl_record_spinning_on_turntable.avif" alt="Vinyl record with micro-engraved text" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/crimson_audio_waveform_on_black.avif" alt="Crimson audio waveform on black" width="100%">
-</p>
-
-### Seductive AI / Woman + Technology
-
-<p align="center">
-  <img src="assets/woman_manipulating_holographic_data.avif" alt="Woman manipulating holographic data" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_emerging_from_cables.avif" alt="Woman emerging from fiber optic cables" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_recording_in_studio_booth.avif" alt="Woman recording in studio booth" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_walking_in_light_corridor.avif" alt="Woman walking in red light corridor" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_with_glowing_red_waveform.avif" alt="Woman with glowing red waveform halo" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_in_room_with_screens.avif" alt="Woman in room surrounded by screens" width="100%">
-</p>
-
-### Dark Abstract / Conceptual
-
-<p align="center">
-  <img src="assets/geometric_structure_audio_wavefo.avif" alt="Impossible geometric waveform structure" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_touching_orbs_in_library.avif" alt="Library of audio orbs" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/masterpiece_best_quality_dark_conceptual.avif" alt="Text figure in desert" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/black_hole_absorbing_information.avif" alt="Black hole absorbing information" width="100%">
-</p>
-
-### Terminal / Hacker Aesthetic
-
-<p align="center">
-  <img src="assets/woman_in_data_storm.avif" alt="Wall of terminals with data storm" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/eye_reflecting_scrolling_termina.avif" alt="Eye reflecting scrolling terminal" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/heartbeat_monitor_screen_showing.avif" alt="Heartbeat monitor showing search results" width="100%">
-</p>
-
-### Artistic / Unique
-
-<p align="center">
-  <img src="assets/lips_soundwave_line_drawing.avif" alt="Lips soundwave line drawing minimalist" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/ink_dropped_on_paper_waveform.avif" alt="Ink dropped on paper forming waveform" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/human_eye_with_audio_waveform.avif" alt="Human eye with audio waveform iris" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_back_with_tattoo.avif" alt="Woman back with search result tattoo" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_face_reflected_shattered.avif" alt="Face reflected in shattered mirror shards" width="100%">
-</p>
-
-### Epic / Fantasy
-
-<p align="center">
-  <img src="assets/woman_on_throne_of_monitors.avif" alt="Dark queen on throne of monitors" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/canyon_shaped_like_audio_waveform.avif" alt="Canyon shaped like audio waveform" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_holding_glowing_microphone.avif" alt="Woman holding glowing microphone as weapon" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_underwater_in_data_center.avif" alt="Woman underwater in data center" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_walking_in_waveform_garden.avif" alt="Woman walking in digital waveform garden" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/woman_speaking_into_microphone_s.avif" alt="Voice as physical shockwave force" width="100%">
-</p>
-
-### Banner / Social
-
-<p align="center">
-  <img src="assets/monolith_with_glowing_red_text.avif" alt="Monolith with glowing red text" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/web_pages_network_constellation.avif" alt="Web pages as constellation network" width="100%">
-</p>
+<table>
+<tr>
+<td width="50%"><img src="assets/eye_reflecting_scrolling_termina.avif" alt="Terminal eye" width="100%"></td>
+<td width="50%"><img src="assets/canyon_shaped_like_audio_waveform.avif" alt="Waveform canyon" width="100%"></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/monolith_with_glowing_red_text.avif" alt="Obelisk monolith" width="100%"></td>
+<td width="50%"><img src="assets/woman_in_room_with_screens.avif" alt="Screen room" width="100%"></td>
+</tr>
+</table>
 
 ---
 
@@ -790,26 +654,38 @@ masterpiece, best quality, ultra detailed 16:9 banner, dark gradient from deep b
 
 </details>
 
----
-
-## Prompt Tips for Best Results
+### Prompt Tips
 
 | Tip | Detail |
 |-----|--------|
-| **Aspect Ratio** | Use `--ar 16:9` for Midjourney, `1344x768` or `1920x1088` for Stable Diffusion/Flux |
-| **Quality Boosters** | Start with `masterpiece, best quality, ultra detailed` for SD, `photorealistic, 8K, ARRI Alexa` for realistic |
-| **Negative Prompt** | `lowres, bad anatomy, bad hands, text error, missing fingers, extra digits, cropped, worst quality, low quality, jpeg artifacts, signature, watermark` |
-| **Color Palette** | Red/crimson/black — use `crimson, deep red, neon red, dark chrome, obsidian black` |
-| **Style Mixing** | `cyberpunk` + `film noir` + `editorial photography` = signature RawVox look |
-| **Models** | Flux.1-dev, Stable Diffusion XL, Midjourney v6, or Pony Diffusion |
-| **Upscaling** | Real-ESRGAN or Topaz after generation for print/web quality |
-
-## License
-
-This project is provided as-is for educational and research purposes. Individual components have their own licenses (see table above).
+| **Aspect Ratio** | `--ar 16:9` (Midjourney), `1344x768` (SDXL/Flux) |
+| **Quality** | `masterpiece, best quality, ultra detailed` for SD; `photorealistic, 8K, ARRI Alexa` for realistic |
+| **Negative** | `lowres, bad anatomy, bad hands, text error, missing fingers, extra digits, cropped, worst quality, low quality, jpeg artifacts, watermark` |
+| **Palette** | `crimson, deep red, neon red, dark chrome, obsidian black` |
+| **Style** | `cyberpunk` + `film noir` + `editorial photography` |
+| **Models** | Flux.1-dev, SDXL, Midjourney v6, Pony Diffusion |
 
 ---
 
-<p align="center">
-  <strong>RawVox</strong> — Speak freely. Search deeply. Hear everything.
-</p>
+## Open Source Dependencies
+
+| Library | Purpose | License |
+|---------|---------|---------|
+| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | Real-time ASR | MIT |
+| [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) | #1 TTS model | Apache 2.0 |
+| [sentence-transformers](https://huggingface.co/sentence-transformers) | Semantic ranking | Apache 2.0 |
+| [edge-tts](https://github.com/rany2/edge-tts) | Neural TTS fallback | GPL-3.0 |
+| [httpx](https://github.com/encode/httpx) | Async HTTP | BSD-3 |
+| [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) | HTML parsing | MIT |
+| [FastAPI](https://github.com/tiangolo/fastapi) | API server | MIT |
+| [SearXNG](https://github.com/searxng/searxng) | Uncensored metasearch | AGPL-3.0 |
+
+---
+
+<div align="center">
+
+<img src="assets/monolith_with_glowing_red_text.avif" alt="RawVox" width="100%">
+
+**RawVox** — Speak freely. Search deeply. Hear everything.
+
+</div>
