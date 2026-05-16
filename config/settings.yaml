@@ -1,0 +1,65 @@
+# Uncensored AI ASR + Deep Search Pipeline Configuration
+
+asr:
+  model: "large-v3"          # faster-whisper model (tiny|base|small|medium|large-v3)
+  device: "auto"             # auto|cpu|cuda
+  compute_type: "int8"       # float16|int8|int8_float16
+  language: null             # null=auto-detect, or "en","es","fr",etc.
+  beam_size: 5
+  vad_filter: false          # Voice activity detection filter (disabled for uncensored)
+  word_timestamps: true
+  sample_rate: 16000
+  chunk_duration: 5          # seconds per processing chunk
+
+search:
+  # Primary: SearXNG self-hosted (uncensored, no tracking)
+  searxng_url: "http://localhost:8888"
+  # Fallback engines (direct API - no censorship)
+  engines:
+    - "duckduckgo"
+    - "brave"
+    - "mojeek"
+    - "qwant"
+  max_results: 20
+  max_depth: 3               # How deep to crawl each result
+  timeout: 30
+  # Content extraction
+  max_content_length: 50000  # chars per page
+  follow_redirects: true
+  verify_ssl: false          # Some sources may need this off
+
+tts:
+  backend: "auto"            # auto-detects: kokoro > edge-tts > say > coqui
+  # === KOKORO VOICES (HuggingFace #1 TTS, 9.7M downloads) ===
+  # These are the highest quality seductive voices available:
+  #   af_bella  - A-grade HOT. Warm, sultry, highest quality female voice
+  #   af_heart  - A-grade HEART. Intimate, emotional, heartfelt whispers
+  #   af_nicole - B-grade. Close intimate mic, ASMR-like, use headphones
+  #   af_aoede  - Breathy, soft, gentle whispering
+  #   af_sarah  - Smooth, confident, natural warmth
+  #   af_kore   - Clear, warm, pleasant
+  #   bf_emma   - British B-grade, sophisticated elegant seduction
+  #   bf_isabella - British, refined cultured allure
+  # === EDGE-TTS VOICES (Microsoft Neural, fallback) ===
+  #   en-US-AriaNeural     - warm, intimate, smooth
+  #   en-US-MichelleNeural - husky, deep, confident
+  #   en-US-AnaNeural      - velvety, sultry
+  #   en-GB-SoniaNeural    - British sophisticated
+  #   en-IE-EmilyNeural    - Irish, melodic, enchanting
+  voice: "af_bella"          # The ultimate seductive voice (Kokoro A-grade)
+  speed: 0.8                 # Kokoro speed: 0.8 = slower/sultrier (1.0 = normal)
+  rate: "-20%"               # edge-tts rate: slower = more sensual
+  volume: "+5%"
+  language: "en"
+  # Coqui XTTS-v2 (GPU required, for voice cloning any voice)
+  speaker_wav: null          # Path to a voice sample for cloning
+
+pipeline:
+  # End-to-end settings
+  continuous: true           # Keep listening after each query
+  search_on_silence: true    # Auto-search when user stops speaking
+  silence_threshold: 2.0     # Seconds of silence before processing
+  output_format: "both"      # text|audio|both
+  save_transcripts: true
+  transcript_dir: "./transcripts"
+  verbosity: "normal"        # quiet|normal|verbose

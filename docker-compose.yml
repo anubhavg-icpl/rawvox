@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  asr-pipeline:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+      - ./transcripts:/app/transcripts
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: python src/pipeline/server.py
+
+  # SearXNG for uncensored self-hosted search
+  searxng:
+    image: searxng/searxng:latest
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./config/searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888/

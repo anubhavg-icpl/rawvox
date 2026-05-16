@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+.env
+
+# Models (downloaded at runtime)
+models/
+
+# Transcripts (generated at runtime)
+transcripts/
+
+# Audio samples (user data)
+audio_samples/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.wav
+*.mp3
+*.aiff
