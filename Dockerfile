@@ -64,9 +64,15 @@ COPY main.py .
 # the first /api/tts and /api/search calls don't pay a download tax.
 # Whisper models are kept on the runtime volume (see compose), since
 # users may pick large-v3 (~3 GB) or base (140 MB).
+#
+# HF_TOKEN passed via build arg lifts the unauthenticated HF Hub rate
+# limit and speeds up downloads. Optional — empty token still works.
+ARG HF_TOKEN=""
 ENV HF_HOME=/app/.cache/hf \
     TRANSFORMERS_CACHE=/app/.cache/hf \
-    HF_HUB_DISABLE_TELEMETRY=1
+    HF_HUB_DISABLE_TELEMETRY=1 \
+    HF_TOKEN=$HF_TOKEN \
+    HUGGING_FACE_HUB_TOKEN=$HF_TOKEN
 RUN mkdir -p /app/.cache/hf && \
     python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')" && \
     python -c "from kokoro import KPipeline; KPipeline(lang_code='a', repo_id='hexgrad/Kokoro-82M')" && \

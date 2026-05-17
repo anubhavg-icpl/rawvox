@@ -14,6 +14,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        # Lifts HF Hub rate limit at build time. Get a free token at
+        # https://huggingface.co/settings/tokens (read scope is enough).
+        # Set in .env or shell: HF_TOKEN=hf_xxxx
+        HF_TOKEN: ${HF_TOKEN:-}
     image: rawvox:latest
     container_name: rawvox
     ports:
@@ -25,6 +30,10 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - HF_HOME=/app/models/hf
+      # Runtime HF token for any lazy downloads (e.g. user switches
+      # whisper model size to large-v3 on first request).
+      - HF_TOKEN=${HF_TOKEN:-}
+      - HUGGING_FACE_HUB_TOKEN=${HF_TOKEN:-}
       # Point the search engine at the local SearXNG instance.
       # The Pipeline reads config/settings.yaml — this env is only
       # informational unless you wire it into the config loader.
