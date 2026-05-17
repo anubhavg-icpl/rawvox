@@ -38,3 +38,11 @@ Thumbs.db
 *.aiff
 download/
 prompts/
+
+# Node / web
+web/node_modules/
+web/dist/
+web/.vite/
+web/tsconfig.tsbuildinfo
+**/node_modules/
+*.tsbuildinfo

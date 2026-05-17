@@ -37,7 +37,11 @@ class DeepResult:
 class UncensoredSearchEngine:
     def __init__(self, config: dict):
         self.config = config
-        self.engines = config.get("engines", ["duckduckgo", "brave", "mojeek"])
+        # Note: "qwant" listed in config but no impl yet — silently dropped.
+        self.engines = [
+            e for e in config.get("engines", ["duckduckgo", "brave", "mojeek"])
+            if e in {"duckduckgo", "brave", "mojeek", "searxng"}
+        ]
         self.max_results = config.get("max_results", 20)
         self.timeout = config.get("timeout", 30)
         self.max_depth = config.get("max_depth", 3)
@@ -223,7 +227,76 @@ class UncensoredSearchEngine:
             return main.get_text(separator="\n", strip=True)
         return soup.get_text(separator="\n", strip=True)
 
-    # --- Aggregate search across all engines ---
+    # --- Engine registry (for status endpoint + streaming) ---
+    def _engine_callables(self):
+        registry = {
+            "searxng": (self._search_searxng, bool(self.searxng_url)),
+            "duckduckgo": (self._search_duckduckgo, "duckduckgo" in self.engines),
+            "brave": (self._search_brave, "brave" in self.engines),
+            "mojeek": (self._search_mojeek, "mojeek" in self.engines),
+        }
+        return {k: v for k, v in registry.items() if v[1]}
+
+    async def search_stream(self, query: str, deep: bool = True, on_event=None):
+        """Streaming variant. Emits events via on_event(dict) callback.
+        Event types: engine.start | engine.done | crawl.start | crawl.done | ranked | done."""
+        async def emit(evt):
+            if on_event:
+                await on_event(evt)
+
+        await emit({"type": "engine.start", "engines": list(self._engine_callables().keys())})
+
+        active = self._engine_callables()
+
+        async def run_one(name, fn):
+            await emit({"type": "engine.running", "name": name})
+            try:
+                res = await fn(query)
+                await emit({"type": "engine.done", "name": name, "count": len(res)})
+                return res
+            except Exception as e:
+                await emit({"type": "engine.error", "name": name, "error": str(e)})
+                return []
+
+        result_lists = await asyncio.gather(*[run_one(n, fn) for n, (fn, _) in active.items()])
+
+        seen_urls = set()
+        aggregated: list[SearchResult] = []
+        for rl in result_lists:
+            for r in rl:
+                norm = r.url.rstrip("/")
+                if norm and norm not in seen_urls:
+                    seen_urls.add(norm)
+                    aggregated.append(r)
+
+        aggregated.sort(key=lambda r: r.rank)
+        aggregated = aggregated[: self.max_results]
+        await emit({"type": "aggregated", "count": len(aggregated)})
+
+        if not deep or not aggregated:
+            await emit({"type": "done", "results": len(aggregated)})
+            return aggregated
+
+        await emit({"type": "crawl.start", "n": min(len(aggregated), self.max_depth)})
+        crawls = await asyncio.gather(
+            *[self._crawl_one(r, i, emit) for i, r in enumerate(aggregated[: self.max_depth])]
+        )
+        deep_results: list[DeepResult] = list(crawls)
+        for r in aggregated[self.max_depth:]:
+            deep_results.append(DeepResult(r.title, r.url, r.snippet, "", r.source_engine, -1))
+
+        await emit({"type": "done", "results": len(deep_results)})
+        return deep_results
+
+    async def _crawl_one(self, result: "SearchResult", idx: int, emit):
+        content = await self._crawl_page(result.url)
+        await emit({"type": "crawl.done", "idx": idx, "url": result.url, "bytes": len(content)})
+        return DeepResult(
+            title=result.title, url=result.url, snippet=result.snippet,
+            full_content=content, source_engine=result.source_engine, depth=0,
+        )
+
+    # --- Aggregate search across all engines (non-streaming, original) ---
     async def search(self, query: str, deep: bool = True) -> list[SearchResult | DeepResult]:
         print(f"[Search] Querying: '{query}'")
         tasks = []

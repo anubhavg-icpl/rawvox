@@ -1,0 +1,50 @@
+# vcs
+.git
+.gitignore
+.github
+
+# python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+*.egg-info
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# node
+web/node_modules
+web/dist
+web/.vite
+**/node_modules
+
+# runtime data
+transcripts/
+models/
+audio_samples/
+*.wav
+*.mp3
+*.aiff
+
+# editor / os
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# build artifacts
+dist/
+build/
+*.log
+
+# misc
+.env
+.env.*
+download/
+prompts/
+README.md

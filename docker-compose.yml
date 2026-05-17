@@ -1,15 +1,44 @@
-version: "3.8"
+# RawVox — local stack
+#   rawvox:   the API + web console (port 8000)
+#   searxng:  self-hosted uncensored meta-search (port 8888)
+#
+# Usage:
+#   docker compose up -d
+#   open http://localhost:8000
+#
+# GPU: nvidia runtime auto-detected. Comment out the `deploy:` block
+# if you don't have an NVIDIA GPU + nvidia-container-toolkit.
 
 services:
-  asr-pipeline:
-    build: .
+  rawvox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rawvox:latest
+    container_name: rawvox
     ports:
       - "8000:8000"
     volumes:
-      - ./config:/app/config
+      - ./config:/app/config:ro
       - ./transcripts:/app/transcripts
+      - rawvox-models:/app/models
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
+      - HF_HOME=/app/models/hf
+      # Point the search engine at the local SearXNG instance.
+      # The Pipeline reads config/settings.yaml — this env is only
+      # informational unless you wire it into the config loader.
+      - SEARXNG_URL=http://searxng:8080
+    depends_on:
+      searxng:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
     deploy:
       resources:
         reservations:
@@ -17,14 +46,18 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    command: python src/pipeline/server.py
 
-  # SearXNG for uncensored self-hosted search
   searxng:
     image: searxng/searxng:latest
+    container_name: rawvox-searxng
     ports:
       - "8888:8080"
     volumes:
       - ./config/searxng:/etc/searxng:rw
     environment:
       - SEARXNG_BASE_URL=http://localhost:8888/
+      - SEARXNG_SECRET=${SEARXNG_SECRET:-rawvox-dev-secret-change-me}
+    restart: unless-stopped
+
+volumes:
+  rawvox-models:

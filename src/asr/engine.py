@@ -147,7 +147,8 @@ class RealTimeASR:
         if not filepath.exists():
             raise FileNotFoundError(f"Audio file not found: {filepath}")
 
-        from faster_whisper import WhisperModel as WM
+        if self.model is None:
+            self.load_model()
 
         segments, info = self.model.transcribe(
             str(filepath),

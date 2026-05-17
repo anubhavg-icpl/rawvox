@@ -75,17 +75,32 @@ class Pipeline:
 
         self.asr.load_model()
 
+        # Bridge sync ASR callback (called from sounddevice thread)
+        # into the running async loop, instead of nesting asyncio.run().
+        loop = asyncio.get_running_loop()
+        pending: asyncio.Queue[str] = asyncio.Queue()
+
         def on_transcription(result: TranscriptionResult):
             if result.text.strip():
-                # Run the search pipeline asynchronously
-                answer = asyncio.run(self.run_query(result.text.strip(), speak=True))
-                self._print_answer(answer)
+                loop.call_soon_threadsafe(pending.put_nowait, result.text.strip())
+
+        import threading
+        listen_thread = threading.Thread(
+            target=self.asr.listen_and_transcribe,
+            kwargs={"callback": on_transcription},
+            daemon=True,
+        )
+        listen_thread.start()
 
         try:
-            self.asr.listen_and_transcribe(callback=on_transcription)
-        except KeyboardInterrupt:
+            while True:
+                query = await pending.get()
+                answer = await self.run_query(query, speak=True)
+                self._print_answer(answer)
+        except (KeyboardInterrupt, asyncio.CancelledError):
             print("\n[Pipeline] Shutting down...")
         finally:
+            self.asr.stop_capture()
             await self.search_engine.close()
 
     async def run_once(self, audio_file: str = None, query: str = None):
