@@ -1,7 +1,11 @@
 # Uncensored AI ASR + Deep Search Pipeline Configuration
 
 asr:
-  model: "large-v3"          # faster-whisper model (tiny|base|small|medium|large-v3)
+  model: "base"              # tiny|base|small|medium|large-v3
+                             #   base   140MB  fast on CPU, fine quality (default)
+                             #   small  461MB  better, slower
+                             #   medium 1.4GB  best CPU/GPU tradeoff
+                             #   large-v3 3GB  highest accuracy, GPU recommended
   device: "auto"             # auto|cpu|cuda
   compute_type: "int8"       # float16|int8|int8_float16
   language: null             # null=auto-detect, or "en","es","fr",etc.

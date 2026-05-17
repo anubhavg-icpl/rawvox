@@ -70,7 +70,7 @@ export function usePipeline() {
   }, []);
 
   const sendQuery = useCallback(
-    (text: string) => {
+    (text: string, opts?: { voice?: string; speed?: number }) => {
       ttsChunksRef.current = [];
       setState((s) => ({
         ...s,
@@ -84,16 +84,19 @@ export function usePipeline() {
         ttsBlobUrl: null,
         error: null,
       }));
-      send({ type: "query", text });
+      send({ type: "query", text, voice: opts?.voice, speed: opts?.speed });
     },
     [send]
   );
 
-  const stopAndFlush = useCallback(() => {
-    ttsChunksRef.current = [];
-    setState((s) => ({ ...s, busy: true }));
-    send({ type: "stop" });
-  }, [send]);
+  const stopAndFlush = useCallback(
+    (opts?: { voice?: string; speed?: number }) => {
+      ttsChunksRef.current = [];
+      setState((s) => ({ ...s, busy: true }));
+      send({ type: "stop", voice: opts?.voice, speed: opts?.speed });
+    },
+    [send]
+  );
 
   const reset = useCallback(() => {
     ttsChunksRef.current = [];

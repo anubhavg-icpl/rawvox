@@ -37,13 +37,48 @@ pipeline: Pipeline | None = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Eagerly load all models so the first user request is fast.
+    Models cache to HF_HOME (mounted volume in compose) so this only
+    pays a download cost on the very first boot."""
     global pipeline
+
+    banner = (
+        "\n"
+        "╭───────────────────────────────────────────────╮\n"
+        "│   RawVox · uncensored ASR + search + voice    │\n"
+        "╰───────────────────────────────────────────────╯\n"
+    )
+    print(banner, flush=True)
+    print("[Server] Initializing pipeline...", flush=True)
     pipeline = Pipeline()
-    print("[Server] Pipeline initialized")
+
+    print("[Server] Warming up ASR (whisper)...", flush=True)
+    try:
+        pipeline.asr.load_model()
+    except Exception as e:
+        print(f"[Server] ASR warmup failed (will retry on first use): {e}", flush=True)
+
+    print("[Server] Warming up extractor (MiniLM)...", flush=True)
+    try:
+        pipeline.extractor._load_model()
+    except Exception as e:
+        print(f"[Server] Extractor warmup failed: {e}", flush=True)
+
+    print("[Server] Warming up TTS (kokoro)...", flush=True)
+    try:
+        # Detect backend without forcing kokoro if unavailable.
+        backend = pipeline.tts._detect_backend()
+        print(f"[Server] TTS backend: {backend}", flush=True)
+        if backend == "kokoro":
+            pipeline.tts._load_kokoro()
+    except Exception as e:
+        print(f"[Server] TTS warmup failed: {e}", flush=True)
+
+    print("[Server] Ready · http://localhost:8000\n", flush=True)
     yield
     if pipeline:
         await pipeline.search_engine.close()
-    print("[Server] Pipeline shut down")
+    print("[Server] Pipeline shut down", flush=True)
 
 
 app = FastAPI(
@@ -392,7 +427,7 @@ async def ws_pipeline(ws: WebSocket):
     silence_chunks = 0
     silence_threshold = 3  # consecutive empty transcribes = stop
 
-    async def handle_query(query: str):
+    async def handle_query(query: str, voice: str | None = None, speed: float | None = None):
         await ws.send_json({"type": "asr.final", "text": query})
 
         async def emit(evt):
@@ -406,6 +441,13 @@ async def ws_pipeline(ws: WebSocket):
             "sources": answer.sources,
             "confidence": answer.confidence,
         })
+
+        # Apply per-request voice + speed overrides (sticky on the engine
+        # for this connection — fine since each ws connection is one user).
+        if voice:
+            p.tts.voice = voice
+        if speed is not None:
+            p.tts.speed = float(speed)
 
         # TTS — generate, then stream base64 chunks of the audio file
         try:
@@ -453,13 +495,21 @@ async def ws_pipeline(ws: WebSocket):
                 except json.JSONDecodeError:
                     continue
                 if data.get("type") == "query":
-                    await handle_query(data["text"])
+                    await handle_query(
+                        data["text"],
+                        voice=data.get("voice"),
+                        speed=data.get("speed"),
+                    )
                 elif data.get("type") == "stop":
                     # Flush buffer and treat as final
                     if buffer.shape[0] > sr:
                         result = p.asr.transcribe_chunk(buffer)
                         if result and result.text.strip():
-                            await handle_query(result.text)
+                            await handle_query(
+                                result.text,
+                                voice=data.get("voice"),
+                                speed=data.get("speed"),
+                            )
                     buffer = np.zeros(0, dtype=np.float32)
                 elif data.get("type") == "reset":
                     buffer = np.zeros(0, dtype=np.float32)

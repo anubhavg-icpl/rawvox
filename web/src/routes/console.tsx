@@ -42,14 +42,14 @@ export default function Console() {
 
   const onRelease = useCallback(() => {
     stop();
-    pipeline.stopAndFlush();
-  }, [stop, pipeline]);
+    pipeline.stopAndFlush({ voice });
+  }, [stop, pipeline, voice]);
 
   const submitText = useCallback(() => {
     if (!text.trim()) return;
-    pipeline.sendQuery(text.trim());
+    pipeline.sendQuery(text.trim(), { voice });
     setText("");
-  }, [text, pipeline]);
+  }, [text, pipeline, voice]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

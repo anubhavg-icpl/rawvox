@@ -50,13 +50,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# spaCy model used by Kokoro G2P — must be downloaded after spaCy is
+# installed; it is not a regular PyPI package.
+RUN python -m spacy download en_core_web_sm
+
 # App code
 COPY src/ ./src/
+COPY scripts/ ./scripts/
 COPY config/ ./config/
 COPY main.py .
 
+# Pre-warm the TTS + extractor models into the image-local HF cache so
+# the first /api/tts and /api/search calls don't pay a download tax.
+# Whisper models are kept on the runtime volume (see compose), since
+# users may pick large-v3 (~3 GB) or base (140 MB).
+ENV HF_HOME=/app/.cache/hf \
+    TRANSFORMERS_CACHE=/app/.cache/hf \
+    HF_HUB_DISABLE_TELEMETRY=1
+RUN mkdir -p /app/.cache/hf && \
+    python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')" && \
+    python -c "from kokoro import KPipeline; KPipeline(lang_code='a', repo_id='hexgrad/Kokoro-82M')" && \
+    python -c "from kokoro import KPipeline; KPipeline(lang_code='b', repo_id='hexgrad/Kokoro-82M')"
+
 # Static frontend from web stage
 COPY --from=web /web/dist /app/web/dist
+
+# Generate per-voice .wav samples so the landing voice gallery can
+# play them without the API being reachable. Falls through gracefully
+# on any per-voice failure (the UI hides missing samples).
+RUN mkdir -p /app/web/dist/samples && \
+    python scripts/generate_voice_samples.py /app/web/dist/samples || \
+    echo "[warn] some voice samples failed — landing will hide missing ones"
 
 # Persisted dirs (mounted volumes recommended)
 RUN mkdir -p /app/transcripts /app/models
