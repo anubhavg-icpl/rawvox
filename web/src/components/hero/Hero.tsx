@@ -3,7 +3,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Aurora } from "./Aurora";
 import { CLIInstall } from "./CLIInstall";
-import { RiveFace } from "./RiveFace";
+import { HeroAvatar } from "./HeroAvatar";
 import { Button } from "../ui/button";
 
 const fade = {
@@ -98,13 +98,13 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: face + CLI */}
+          {/* Right: avatar + CLI */}
           <motion.div
             {...fade}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative space-y-6"
           >
-            <RiveFace />
+            <HeroAvatar />
             <CLIInstall />
           </motion.div>
         </div>

@@ -22,5 +22,16 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: true,
     target: "es2022",
+    rollupOptions: {
+      output: {
+        // Pin heavy libs into their own chunks so the landing's hero
+        // AsciiHead and the console route share a single cached three.js bundle.
+        manualChunks: {
+          three: ["three"],
+          motion: ["framer-motion"],
+          router: ["@tanstack/react-router", "@tanstack/react-query"],
+        },
+      },
+    },
   },
 });

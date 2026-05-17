@@ -10,8 +10,8 @@ FROM node:20-alpine AS web
 
 WORKDIR /web
 
-# Enable pnpm via corepack
-RUN corepack enable
+# Enable pnpm via corepack, pinned to match the local lockfile.
+RUN corepack enable && corepack prepare pnpm@10.33.2 --activate
 
 # Install deps first (cache layer)
 COPY web/package.json web/pnpm-lock.yaml ./

@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@rive-app/react-canvas':
-        specifier: ^4.20.0
-        version: 4.28.5(react@19.2.6)
       '@tanstack/react-query':
         specifier: ^5.62.0
         version: 5.100.10(react@19.2.6)
@@ -348,14 +345,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@rive-app/canvas@2.37.7':
-    resolution: {integrity: sha512-dS2W4igbETc3zxWhDO8x8wyB8HrtZCG48ofODBijHbV5lINYTz8Xx3P1mHtK/ywzKWhaSSAI95QTz9FqJG1ghQ==}
-
-  '@rive-app/react-canvas@4.28.5':
-    resolution: {integrity: sha512-gOucxDd0X9JX++TUW8SunvJ7743ejf+R/8Oj1/XXocZKfPHT5/tgI8C8STWmor1AbXEnx8oZ0kH2V7EvA9QFLA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -1309,13 +1298,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@rive-app/canvas@2.37.7': {}
-
-  '@rive-app/react-canvas@4.28.5(react@19.2.6)':
-    dependencies:
-      '@rive-app/canvas': 2.37.7
-      react: 19.2.6
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
